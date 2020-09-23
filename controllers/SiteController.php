@@ -67,6 +67,7 @@ class SiteController extends Controller
     public function actionIndex($pageNumber = 1)
     {
         $pageNumber = Yii::$app->request->get('pageNumber');
+        $sort = Yii::$app->request->get('sort');
 
         $client = new Client();
 
@@ -79,6 +80,14 @@ class SiteController extends Controller
         $decodedPosts = '';
         if ($res->getStatusCode() == 200) {
             $decodedPosts = json_decode($res->getBody());
+        }
+
+        if (isset($sort)) {
+            if ($sort == 'firstName') {
+                usort($decodedPosts, array($this, "cmpFirstName"));
+            } else if ($sort == 'lastName') {
+                usort($decodedPosts, array($this, "cmpLastName"));
+            }
         }
 
         return $this->render('index', [
@@ -184,7 +193,7 @@ class SiteController extends Controller
 
         $client = new Client();
 
-        $res = $client->request('GET', 'http://ws-old.parlament.ch/councillors/' . $id .'?format=json', [
+        $res = $client->request('GET', 'http://ws-old.parlament.ch/councillors/' . $id . '?format=json', [
             'headers' => [
                 'Accept' => 'application/json'
             ]
@@ -198,5 +207,27 @@ class SiteController extends Controller
         return $this->render('details', [
             'data' => $decodedPost
         ]);
+    }
+
+    public function cmpFirstName($a, $b)
+    {
+        if ($a->firstName < $b->firstName) {
+            return -1;
+        } else if ($a->firstName > $b->firstName) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cmpLastName($a, $b)
+    {
+        if ($a->lastName < $b->lastName) {
+            return -1;
+        } else if ($a->lastName > $b->lastName) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

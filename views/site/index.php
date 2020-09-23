@@ -14,6 +14,10 @@ $this->title = 'My Yii Application';
 <a href="<?= Url::to(['site/index', 'pageNumber' => 4]); ?>" class="btn btn-primary">4</a>
 <a href="<?= Url::to(['site/index', 'pageNumber' => 5]); ?>" class="btn btn-primary">5</a>
 
+<span><b> Sort by: </b></span>
+<a href="<?= Url::to(['site/index', 'sort' => 'firstName']); ?>" class="btn btn-primary">First Name</a>
+<a href="<?= Url::to(['site/index', 'sort' => 'lastName']); ?>" class="btn btn-primary">Last Name</a>
+
 <table class="table">
     <thead>
     <tr>
