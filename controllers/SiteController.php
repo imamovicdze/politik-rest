@@ -67,7 +67,6 @@ class SiteController extends Controller
     public function actionIndex($pageNumber = 1)
     {
         $pageNumber = Yii::$app->request->get('pageNumber');
-        $sort = Yii::$app->request->get('sort');
 
         $client = new Client();
 
@@ -80,14 +79,6 @@ class SiteController extends Controller
         $decodedPosts = '';
         if ($res->getStatusCode() == 200) {
             $decodedPosts = json_decode($res->getBody());
-        }
-
-        if (isset($sort)) {
-            if ($sort == 'firstName') {
-                usort($decodedPosts, array($this, "cmpFirstName"));
-            } else if ($sort == 'lastName') {
-                usort($decodedPosts, array($this, "cmpLastName"));
-            }
         }
 
         return $this->render('index', [
@@ -206,6 +197,58 @@ class SiteController extends Controller
 
         return $this->render('details', [
             'data' => $decodedPost
+        ]);
+    }
+
+    /**
+     * Displays about page which render data order by firstName
+     *
+     * @return string
+     */
+    public function actionFirst()
+    {
+        $client = new Client();
+
+        $res = $client->request('GET', 'http://ws-old.parlament.ch/councillors?format=json', [
+            'headers' => [
+                'Accept' => 'application/json'
+            ]
+        ]);
+
+        $decodedPosts = '';
+        if ($res->getStatusCode() == 200) {
+            $decodedPosts = json_decode($res->getBody());
+            usort($decodedPosts, array($this, "cmpFirstName"));
+        }
+
+        return $this->render('name', [
+            'data' => $decodedPosts
+        ]);
+    }
+
+    /**
+     * Displays about page which render data order by lastName
+     *
+     * @return string
+     */
+    public function actionLast()
+    {
+        $client = new Client();
+
+        $res = $client->request('GET', 'http://ws-old.parlament.ch/councillors?format=json', [
+            'headers' => [
+                'Accept' => 'application/json'
+            ]
+        ]);
+
+        $decodedPosts = '';
+        if ($res->getStatusCode() == 200) {
+            $decodedPosts = json_decode($res->getBody());
+            usort($decodedPosts, array($this, "cmpLastName"));
+        }
+
+        return $this->render('last', [
+            'data' => $decodedPosts
         ]);
     }
 

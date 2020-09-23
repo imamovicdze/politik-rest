@@ -5,15 +5,9 @@
 
 use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
+$this->title = 'Order By Last Name';
 ?>
-<h3>Filter</h3>
-<a href="<?= Url::toRoute(['site/index', 'pageNumber' => 1]); ?>" class="btn btn-primary">1</a>
-<a href="<?= Url::toRoute(['site/index', 'pageNumber' => 2]); ?>" class="btn btn-primary">2</a>
-<a href="<?= Url::to(['site/index', 'pageNumber' => 3]); ?>" class="btn btn-primary">3</a>
-<a href="<?= Url::to(['site/index', 'pageNumber' => 4]); ?>" class="btn btn-primary">4</a>
-<a href="<?= Url::to(['site/index', 'pageNumber' => 5]); ?>" class="btn btn-primary">5</a>
-
+<h3>Order By Last Name</h3>
 <table class="table">
     <thead>
     <tr>
