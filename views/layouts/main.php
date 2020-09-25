@@ -39,8 +39,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Order Name', 'url' => ['/site/first']],
-            ['label' => 'Order LastName', 'url' => ['/site/last']],
+            ['label' => 'Order', 'url' => ['/site/order']],
             ['label' => 'Get details of 5 randomly chosen councillors', 'url' => ['/site/random']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]

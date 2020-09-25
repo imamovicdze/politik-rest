@@ -7,7 +7,10 @@ use yii\helpers\Url;
 
 $this->title = 'Order By First Name';
 ?>
-<h3>Order By First Name</h3>
+<h3>Order By:</h3>
+<a href="<?= Url::toRoute(['site/order', 'order' => 'firstName']); ?>" class="btn btn-primary">First Name</a>
+<a href="<?= Url::toRoute(['site/order', 'order' => 'lastName']); ?>" class="btn btn-primary">Last Name</a>
+
 <table class="table">
     <thead>
     <tr>

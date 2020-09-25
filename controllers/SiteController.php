@@ -2,16 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\ContactForm;
+use app\models\LoginForm;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -177,6 +176,7 @@ class SiteController extends Controller
      * Displays details page.
      *
      * @return string
+     * @throws GuzzleException
      */
     public function actionDetails()
     {
@@ -201,12 +201,15 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays about page which render data order by firstName
+     * Displays order page
      *
      * @return string
+     * @throws GuzzleException
      */
-    public function actionFirst()
+    public function actionOrder()
     {
+        $order = Yii::$app->request->get('order');
+
         $client = new Client();
 
         $res = $client->request('GET', 'http://ws-old.parlament.ch/councillors?format=json', [
@@ -218,40 +221,28 @@ class SiteController extends Controller
         $decodedPosts = '';
         if ($res->getStatusCode() == 200) {
             $decodedPosts = json_decode($res->getBody());
-            usort($decodedPosts, array($this, "cmpFirstName"));
         }
 
-        return $this->render('name', [
+        if (isset($order)) {
+            if ($order == 'firstName') {
+                usort($decodedPosts, array($this, "cmpFirstName"));
+            } elseif ($order == 'lastName') {
+                usort($decodedPosts, array($this, "cmpLastName"));
+            }
+        }
+
+        return $this->render('order', [
             'data' => $decodedPosts
         ]);
     }
 
     /**
-     * Displays about page which render data order by lastName
+     * Sort by firstName
      *
-     * @return string
+     * @param $a
+     * @param $b
+     * @return int
      */
-    public function actionLast()
-    {
-        $client = new Client();
-
-        $res = $client->request('GET', 'http://ws-old.parlament.ch/councillors?format=json', [
-            'headers' => [
-                'Accept' => 'application/json'
-            ]
-        ]);
-
-        $decodedPosts = '';
-        if ($res->getStatusCode() == 200) {
-            $decodedPosts = json_decode($res->getBody());
-            usort($decodedPosts, array($this, "cmpLastName"));
-        }
-
-        return $this->render('last', [
-            'data' => $decodedPosts
-        ]);
-    }
-
     public function cmpFirstName($a, $b)
     {
         if ($a->firstName < $b->firstName) {
@@ -263,6 +254,13 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * Sort by lastName
+     *
+     * @param $a
+     * @param $b
+     * @return int
+     */
     public function cmpLastName($a, $b)
     {
         if ($a->lastName < $b->lastName) {
