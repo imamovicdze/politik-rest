@@ -5,10 +5,10 @@
 
 use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
+$this->title = 'Councillor details';
 ?>
 
-<a href="<?= Url::toRoute(['site/random']); ?>" class="btn btn-primary">Back</a>
+<a href="<?= Url::toRoute(['councillor/random']); ?>" class="btn btn-primary">Back</a>
 
 <table class="table">
     <thead>

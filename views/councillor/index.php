@@ -5,11 +5,14 @@
 
 use yii\helpers\Url;
 
-$this->title = 'Order By First Name';
+$this->title = 'Councillors';
 ?>
-<h3>Order By:</h3>
-<a href="<?= Url::toRoute(['site/order', 'order' => 'firstName']); ?>" class="btn btn-primary">First Name</a>
-<a href="<?= Url::toRoute(['site/order', 'order' => 'lastName']); ?>" class="btn btn-primary">Last Name</a>
+<h3>Filter</h3>
+<a href="<?= Url::toRoute(['councillor/index', 'pageNumber' => 1]); ?>" class="btn btn-primary">1</a>
+<a href="<?= Url::toRoute(['councillor/index', 'pageNumber' => 2]); ?>" class="btn btn-primary">2</a>
+<a href="<?= Url::to(['councillor/index', 'pageNumber' => 3]); ?>" class="btn btn-primary">3</a>
+<a href="<?= Url::to(['councillor/index', 'pageNumber' => 4]); ?>" class="btn btn-primary">4</a>
+<a href="<?= Url::to(['councillor/index', 'pageNumber' => 5]); ?>" class="btn btn-primary">5</a>
 
 <table class="table">
     <thead>

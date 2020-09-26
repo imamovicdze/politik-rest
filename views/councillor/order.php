@@ -5,10 +5,12 @@
 
 use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
+$this->title = 'Order';
 ?>
-
-<a href="<?= Url::toRoute(['site/random']); ?>" class="btn btn-primary">Refresh</a>
+<h3>Order By</h3>
+<a href="<?= Url::toRoute(['councillor/order', 'order' => 'firstName']); ?>" class="btn btn-primary">First Name</a>
+<a href="<?= Url::toRoute(['councillor/order', 'order' => 'lastName']); ?>" class="btn btn-primary">Last Name</a>
+<a href="<?= Url::toRoute(['councillor/order']); ?>" class="btn btn-success">Refresh</a>
 
 <table class="table">
     <thead>
@@ -22,7 +24,6 @@ $this->title = 'My Yii Application';
         <th scope="col">officialDenomination</th>
         <th scope="col">salutationLetter</th>
         <th scope="col">salutationTitle</th>
-        <th scope="col">details</th>
     </tr>
     </thead>
 
@@ -38,7 +39,6 @@ $this->title = 'My Yii Application';
             <td><?= $councillor->officialDenomination ?></td>
             <td><?= $councillor->salutationLetter ? $councillor->salutationLetter : 'null'?></td>
             <td><?= $councillor->salutationTitle ? $councillor->salutationTitle : 'null' ?></td>
-            <td><a href="<?= Url::toRoute(['site/details', 'id' => $councillor->id]); ?>" class="btn btn-primary">View Details</a></td>
         </tr>
         </tbody>
     <?php } ?>

@@ -7,6 +7,7 @@ use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -29,8 +30,8 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandLabel' => 'Politik Rest',
+        'brandUrl' => Url::to(['councillor/index']),
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
@@ -38,9 +39,9 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Order', 'url' => ['/site/order']],
-            ['label' => 'Get details of 5 randomly chosen councillors', 'url' => ['/site/random']],
+            ['label' => 'Home', 'url' => ['/councillor/index']],
+            ['label' => 'Order', 'url' => ['/councillor/order']],
+            ['label' => 'Get details of 5 randomly chosen councillors', 'url' => ['/councillor/random']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
